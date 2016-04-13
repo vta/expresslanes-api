@@ -1,0 +1,13 @@
+{
+  "name": "expresslanes_api",
+  "version": "0.1.0",
+  "description": "Node.js on Docker",
+  "author": "Kyle Falconer <Kyle.Falconer@vta.org>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
