@@ -91,6 +91,11 @@ $ npm install
 $ node server.js
 ```
 
+## Usage
+
+The `example.html` file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
+
+
 
 ## To Do:
 
