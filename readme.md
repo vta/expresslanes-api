@@ -87,3 +87,4 @@ To run in development: `node server.js`
 
  * validate against public/private keys or JSON Web Tokens to verify the data pushed to this proxy/API comes from a trusted source.
  * write some unit tests to verify functionality
+ * maybe implement caching (if needed)
