@@ -1,70 +1,56 @@
 # VTA Express Lanes API
 
+An API for accessing the dynamic toll values for the [VTA Silicon Valley Express Lanes](http://www.vta.org/projects-and-programs/highway/silicon-valley-express-lanes).
+
 ![screenshot of example.html in action](screenshot.png?raw=true "screenshot")
+
+## Development
 
 This API was written as a [Dockerized Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/).
 
-To build the docker image:
+## API
 
-    $ docker build -t vta/expresslanes_api .
+### Usage
 
-To run the built image:
+The `example.html` file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
 
-    $ docker run -p 49160:8080 -d vta/expresslanes_api
+With the server running locally, the `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman are](https://www.getpostman.com/) recommended for testing.
 
+Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
 
-To test if it is working:
+### GET /
+#### request
+    curl -X GET -H "Cache-Control: no-cache" -H "Postman-Token: "http://localhost:8080"
 
-    $ curl -i localhost:49160
-
-
-
-To push express lanes data to the API:
-### cURL
+#### response
+The response should be HTTP 200 (OK), and something like the following in the body:
 ```
-    
-    curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
-      {
-        "Plaza_Name": "CLW",
-        "Interval_Starting": "2015-11-02 16:05:00.000",
-        "Pricing_Module": "0.55",
-        "Message_Module": "HOV 2+ NO TOLL"
-      },
-      {
-        "Plaza_Name": "FSW",
-        "Interval_Starting": "2015-11-02 16:05:00.000",
-        "Pricing_Module": "1.80",
-        "Message_Module": "HOV 2+ NO TOLL"
-      }
-    ]' "http://localhost:49160"
+[{"Plaza_Name":"CLW","Interval_Starting":"2015-11-02 16:05:00.000","Pricing_Module":"0.60","Message_Module":"HOV 2+ NO TOLL"},{"Plaza_Name":"FSW","Interval_Starting":"2015-11-02 16:05:00.000","Pricing_Module":"1.80","Message_Module":"HOV 2+ NO TOLL"}]
 ```
 
-### HTTP
+### PUT /
+#### request
 ```
-    PUT  HTTP/1.1
-    Host: localhost:49160
-    Content-Type: application/json
-    Cache-Control: no-cache
-    
-    [
-      {
-        "Plaza_Name": "CLW",
-        "Interval_Starting": "2015-11-02 16:05:00.000",
-        "Pricing_Module": "0.55",
-        "Message_Module": "HOV 2+ NO TOLL"
-      },
-      {
-        "Plaza_Name": "FSW",
-        "Interval_Starting": "2015-11-02 16:05:00.000",
-        "Pricing_Module": "1.80",
-        "Message_Module": "HOV 2+ NO TOLL"
-      }
-    ]
+curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
+  {
+    "Plaza_Name": "CLW",
+    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Pricing_Module": "0.55",
+    "Message_Module": "HOV 2+ NO TOLL"
+  },
+  {
+    "Plaza_Name": "FSW",
+    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Pricing_Module": "1.80",
+    "Message_Module": "HOV 2+ NO TOLL"
+  }
+]' "http://localhost:49160"
 ```
 
-Expected result should be an empty 200 response.
+#### response
+Expected result should be an empty HTTP 200 (OK) response.
 
-If the data is not formed correctly, a 400 response will be given and an error object will be returned showing the error.
+If the data is not formed correctly, a HTTP 400 (Bad Request) response will be given and an error object will be returned showing the error.
 
 Example:
 ```
@@ -85,17 +71,21 @@ Example:
 
 
 
-## Development
-
-To run in development:
+### Running in development
 ```
 $ npm install
 $ node server.js
 ```
 
-## Usage
+### Running as a docker container
 
-The `example.html` file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
+To build the docker image:
+
+    $ docker build -t vta/expresslanes_api .
+
+To run the built image:
+
+    $ docker run -p 49160:8080 -d vta/expresslanes_api
 
 
 
