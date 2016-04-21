@@ -2,23 +2,25 @@
 
 This API was written as a [Dockerized Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/).
 
-to build the docker image:
+To build the docker image:
 
     $ docker build -t vta/expresslanes_api .
 
-to run the built image:
+To run the built image:
 
     $ docker run -p 49160:8080 -d vta/expresslanes_api
 
 
-to test if it is working:
+To test if it is working:
 
     $ curl -i localhost:49160
 
 
 
-to push express lanes data to the API:
-    (cURL):
+To push express lanes data to the API:
+### cURL
+```
+    
     curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
       {
         "Plaza_Name": "CLW",
@@ -33,8 +35,10 @@ to push express lanes data to the API:
         "Message_Module": "HOV 2+ NO TOLL"
       }
     ]' "http://localhost:49160"
+```
 
-    (HTTP):
+### HTTP
+```
     PUT  HTTP/1.1
     Host: localhost:49160
     Content-Type: application/json
@@ -54,12 +58,14 @@ to push express lanes data to the API:
         "Message_Module": "HOV 2+ NO TOLL"
       }
     ]
+```
 
 Expected result should be an empty 200 response.
 
 If the data is not formed correctly, a 400 response will be given and an error object will be returned showing the error.
 
 Example:
+```
 {
   "error": [
     {
@@ -73,7 +79,7 @@ Example:
     }
   ]
 }
-
+```
 
 
 
