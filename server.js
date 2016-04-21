@@ -53,15 +53,10 @@ app.get('/', function (req, res) {
 app.put('/', function (req, res) {
   var response = [];
   
-  if (!req.body){
-  	res.send(util.inspect(req)+'\n');
-  	return;
-  }
-
   var valid = validate(req.body);
   if (!valid){
-  	console.log('POST : data is not valid.');
-  	res.json(400, { error: validate.errors });
+  	res.status(400).json({ error: validate.errors });
+  	return;
   }
 
   tolldata = req.body;

@@ -10,7 +10,19 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.3",
-    "express-validation": "^0.6.0",
-    "joi": "^8.0.5"
-  }
+    "ajv": "^4.0.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vta/expresslanes-api.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vta/expresslanes-api/issues"
+  },
+  "homepage": "https://github.com/vta/expresslanes-api#readme"
 }

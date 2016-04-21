@@ -3,18 +3,21 @@
   "items": {
     "type": "object",
     "properties": {
-      "loc": {
+      "Plaza_Name": {
         "type": ["string"]
       },
-      "toll": {
+      "Interval_Starting": {
         "type": ["string","null"]
       },
-      "message": {
+      "Pricing_Module": {
+        "type": ["string","null"]
+      },
+      "Message_Module": {
         "type": ["string","null"]
       }
     },
     "required": [
-      "loc", "toll", "message"
+      "Plaza_Name", "Interval_Starting", "Pricing_Module", "Message_Module"
     ]
   }
 }

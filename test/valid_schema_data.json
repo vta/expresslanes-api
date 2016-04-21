@@ -1,4 +1,14 @@
-[ 
-    { "loc": "237S", "toll" : null, "message" : "HOV 2+ Only"},
-    { "loc": "880N", "toll" : "0.50", "message" : "HOV 2+ Only"}
+[
+  {
+    "Plaza_Name": "CLW",
+    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Pricing_Module": "0.55",
+    "Message_Module": "HOV 2+ NO TOLL"
+  },
+  {
+    "Plaza_Name": "FSW",
+    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Pricing_Module": "1.80",
+    "Message_Module": "HOV 2+ NO TOLL"
+  }
 ]
