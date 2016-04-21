@@ -1,5 +1,7 @@
 # VTA Express Lanes API
 
+![screenshot of example.html in action](screenshot.png?raw=true "screenshot")
+
 This API was written as a [Dockerized Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/).
 
 To build the docker image:
