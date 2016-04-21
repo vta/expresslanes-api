@@ -9,6 +9,9 @@ COPY package.json /usr/src/app/
 RUN npm install
 
 RUN npm install cors
+RUN npm install --save body-parser
+RUN npm install joi --save
+RUN npm install ajv
 
 # Bundle app source
 COPY . /usr/src/app

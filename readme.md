@@ -19,18 +19,64 @@ to test if it is working:
 
 to push express lanes data to the API:
     (cURL):
-    curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ 
-        "237S" : { "toll" : null, "message" : "HOV 2+ Only"},
-        "880N" : { "toll" : "0.50", "message" : "HOV 2+ Only"}
-    }' "http://localhost:49160"
+    curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
+      {
+        "Plaza_Name": "CLW",
+        "Interval_Starting": "2015-11-02 16:05:00.000",
+        "Pricing_Module": "0.55",
+        "Message_Module": "HOV 2+ NO TOLL"
+      },
+      {
+        "Plaza_Name": "FSW",
+        "Interval_Starting": "2015-11-02 16:05:00.000",
+        "Pricing_Module": "1.80",
+        "Message_Module": "HOV 2+ NO TOLL"
+      }
+    ]' "http://localhost:49160"
 
     (HTTP):
-    POST  HTTP/1.1
+    PUT  HTTP/1.1
     Host: localhost:49160
     Content-Type: application/json
     Cache-Control: no-cache
     
-    { 
-        "237S" : { "toll" : null, "message" : "HOV 2+ Only"},
-        "880N" : { "toll" : "0.50", "message" : "HOV 2+ Only"}
+    [
+      {
+        "Plaza_Name": "CLW",
+        "Interval_Starting": "2015-11-02 16:05:00.000",
+        "Pricing_Module": "0.55",
+        "Message_Module": "HOV 2+ NO TOLL"
+      },
+      {
+        "Plaza_Name": "FSW",
+        "Interval_Starting": "2015-11-02 16:05:00.000",
+        "Pricing_Module": "1.80",
+        "Message_Module": "HOV 2+ NO TOLL"
+      }
+    ]
+
+Expected result should be an empty 200 response.
+
+If the data is not formed correctly, a 400 response will be given and an error object will be returned showing the error.
+
+Example:
+{
+  "error": [
+    {
+      "keyword": "required",
+      "dataPath": "[1]",
+      "schemaPath": "#/items/required",
+      "params": {
+        "missingProperty": "Message_Module"
+      },
+      "message": "should have required property 'Message_Module'"
     }
+  ]
+}
+
+
+
+
+# Development
+
+To run in development: `node server.js`

@@ -1,0 +1,4 @@
+[ 
+    { "loc": "237S", "toll" : null, "message" : "HOV 2+ Only"},
+    { "loc": "880N", "toll" : "0.50", "message" : "HOV 2+ Only"}
+]
