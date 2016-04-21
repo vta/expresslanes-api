@@ -4,6 +4,7 @@ const express = require('express')
 	, Ajv = require('ajv')
 	, bodyParser = require('body-parser')
 	, util = require('util')
+	, cors = require('cors')
 	, app = express();
 
 // Constants
@@ -38,6 +39,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(cors());
 
 
 var ajv = Ajv();

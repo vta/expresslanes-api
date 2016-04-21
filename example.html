@@ -1,0 +1,92 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Express Lanes</title>
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <link href="http://overpass-30e2.kxcdn.com/overpass.css" rel="stylesheet" />
+    <style>
+    body {background-color:#cfcfcf;}
+    .expresslane {
+    	display:block;
+    	box-sizing: border-box; 
+    	width:280px;height:160px;
+    	-webkit-border-radius: 30px;
+    	-moz-border-radius: 30px;
+    	border-radius: 30px;
+    	border:15px solid #FFFFFF;
+    	background-color:#105632;
+    	margin:20px;
+    	padding:20px;
+    	color:#fff;
+    	font-weight:bold;
+    	font-family: Overpass, helvetica, sans-serif;
+    	text-align: left;
+ 	}
+    </style>
+</head>
+<body>
+    
+    
+    <div id="output">
+    </div>
+
+
+    <script type="text/javascript">
+    //<![CDATA[
+    	
+    	var API_ENDPOINT = '//localhost:8080/';
+
+    	var lanes = {
+    		"CLW" : "SR 237 West to Sunnyvale",
+    		"FSW" : "880 North to Oakland"
+    	};
+
+    	var update_in_ms = 0;
+
+    	function fetch(){
+    		window.console.log('getting data');
+    		$.get(API_ENDPOINT)
+		    .done(function(data){
+		    	if (!data || !data.length || data.length < 1){
+		    		$('#output').text('no data!');
+		    		return;
+		    	}
+		    	$('#output').empty();
+
+		    	// get new data five minutes from the time given
+	    		update_in_ms = (new Date(data[0]['Interval_Starting']).getTime() + 5*60000) - ((new Date().getTime()));
+	    		if (update_in_ms < 0) {
+	    			// if for some reason the data is old, then try again in 30 seconds.
+	    			update_in_ms = 30000;
+	    		}
+
+		    	for (var i=0; i < data.length; i++){
+		    		var content = 
+			    		  lanes[data[i]['Plaza_Name']] + '<br/>'
+			    		+ 'Toll : $' + data[i]['Pricing_Module'] + '<br/>'
+			    		+ 'Message : ' + data[i]['Message_Module'];
+		    		$('<div/>').addClass('expresslane').html(content).appendTo($('#output'));
+		    	}
+
+		    	window.console.log('Next update in '+update_in_ms+' milliseconds');
+		    	setTimeout(fetch, update_in_ms);
+		    });
+    	}
+
+        (function() {
+            "use strict";
+            document.addEventListener("touchstart", function(){}, true);
+            window.addEventListener('load', function(){
+            	setTimeout(fetch, update_in_ms);
+            }, false);
+        })();
+    //]]>
+    </script>
+</body>
+
+</html>
