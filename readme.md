@@ -85,8 +85,11 @@ Example:
 
 ## Development
 
-To run in development: `node server.js`
-
+To run in development:
+```
+$ npm install
+$ node server.js
+```
 
 
 ## To Do:
