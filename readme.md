@@ -4,17 +4,12 @@ An API for accessing the dynamic toll values for the [VTA Silicon Valley Express
 
 ![screenshot of example.html in action](screenshot.png?raw=true "screenshot")
 
-## Development
+## API Usage
 
-This API was written as a [Dockerized Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/).
-
-## API
-
-### Usage
 
 The `example.html` file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
 
-With the server running locally, the `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman are](https://www.getpostman.com/) recommended for testing.
+With the server running locally, the `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/) are recommended for testing.
 
 Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
 
@@ -70,6 +65,10 @@ Example:
 ```
 
 
+## Development
+
+This API was written as a [Dockerized Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/).
+
 
 ### Running in development
 ```
@@ -87,10 +86,3 @@ To run the built image:
 
     $ docker run -p 49160:8080 -d vta/expresslanes_api
 
-
-
-## To Do:
-
- * validate against public/private keys or JSON Web Tokens to verify the data pushed to this proxy/API comes from a trusted source.
- * write some unit tests to verify functionality
- * maybe implement caching (if needed)
