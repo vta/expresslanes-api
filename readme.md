@@ -80,6 +80,8 @@ $ node server.js
 
 ### Running as a docker container
 
+Dockerhub: https://hub.docker.com/r/scvta/vta-express-lanes-api/
+
 To build the docker image:
 
     $ docker build -t vta/expresslanes_api .
