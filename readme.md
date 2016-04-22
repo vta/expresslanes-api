@@ -15,7 +15,9 @@ Both requests and responses should be made with Content-Type as `application/jso
 
 ### GET /
 #### request
-    curl -X GET -H "Cache-Control: no-cache" -H "Postman-Token: "http://localhost:8080"
+```
+curl -X GET -H "Cache-Control: no-cache" "http://localhost:8080"
+````
 
 #### response
 The response should be HTTP 200 (OK), and something like the following in the body:
@@ -39,7 +41,7 @@ curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d 
     "Pricing_Module": "1.80",
     "Message_Module": "HOV 2+ NO TOLL"
   }
-]' "http://localhost:49160"
+]' "http://localhost:8080"
 ```
 
 #### response
