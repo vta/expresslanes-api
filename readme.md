@@ -2,6 +2,8 @@
 
 An API for accessing the dynamic toll values for the [VTA Silicon Valley Express Lanes](http://www.vta.org/projects-and-programs/highway/silicon-valley-express-lanes).
 
+This project is packaged as a docker image on Dockerhub: https://hub.docker.com/r/scvta/vta-express-lanes-api/
+
 ![screenshot of example.html in action](screenshot.png?raw=true "screenshot")
 
 ## API Usage
@@ -80,13 +82,11 @@ $ node server.js
 
 ### Running as a docker container
 
-Dockerhub: https://hub.docker.com/r/scvta/vta-express-lanes-api/
-
 To build the docker image:
 
-    $ docker build -t vta/expresslanes_api .
+    $ docker build -t scvta/vta-express-lanes-api .
 
 To run the built image:
 
-    $ docker run -p 49160:8080 -d vta/expresslanes_api
+    $ docker run -d -p 8080:8080 scvta/vta-express-lanes-api:latest
 
