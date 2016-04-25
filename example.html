@@ -43,9 +43,11 @@
 
     	var lanes = {
     		"CLW" : "SR 237 West to Sunnyvale",
-    		"FSW" : "880 North to Oakland"
+    		"FSW" : "I-880 North to Oakland"
     	};
 
+	var UPDATE_INTERVAL = 5*60*1000 + 1000;  // 5 minutes + latency allowance
+	var FALLBACK_INTERVAL = 30*60*1000;	 // 30 seconds
     	var update_in_ms = 0;
 
     	function fetch(){
@@ -59,10 +61,10 @@
 		    	$('#output').empty();
 
 		    	// get new data five minutes from the time given
-	    		update_in_ms = (data[0]['Interval_Starting'] + 5*60000) - ((new Date().getTime()));
+	    		update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
 	    		if (update_in_ms < 0) {
 	    			// if for some reason the data is old, then try again in 30 seconds.
-	    			update_in_ms = 30000;
+	    			update_in_ms = FALLBACK_INTERVAL;
 	    		}
 
 		    	for (var i=0; i < data.length; i++){
