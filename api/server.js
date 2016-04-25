@@ -20,7 +20,7 @@ var tollSchema = {
         "type": ["string"]
       },
       "Interval_Starting": {
-        "type": ["string","null"]
+        "type": ["integer","null"]
       },
       "Pricing_Module": {
         "type": ["string","null"]

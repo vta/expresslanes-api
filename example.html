@@ -59,7 +59,7 @@
 		    	$('#output').empty();
 
 		    	// get new data five minutes from the time given
-	    		update_in_ms = (new Date(data[0]['Interval_Starting']).getTime() + 5*60000) - ((new Date().getTime()));
+	    		update_in_ms = (data[0]['Interval_Starting'] + 5*60000) - ((new Date().getTime()));
 	    		if (update_in_ms < 0) {
 	    			// if for some reason the data is old, then try again in 30 seconds.
 	    			update_in_ms = 30000;
