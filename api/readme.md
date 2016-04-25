@@ -6,6 +6,14 @@ The [example.html](http://rawgit.com/vta/expresslanes-api/master/example.html) f
 
 `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/) are recommended for testing. Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
 
+### Format
+The data sent and received to/from the API is sent as a JSON array of objects with each of the following fields being required in each object:
+* Plaza_Name `(string)` is any string describing the location of the area. In the examples, CLW and FSW represent toll locations for "SR 237 West to Sunnyvale" and "I-880 North to Oakland", respectively. This field cannot be null.
+* Interval_Starting `(number|null)` a number representing time as the number of milliseconds since 1 January 1970 00:00:00 UTC. This value can be null, but it is highly recommended to be populated, as this value allows clients to determine when the next update should occur.
+* Pricing_Module `(string|null)` is the price.
+* Message_Module `(string|null`) is any arbitrary message to display.
+
+
 ## GET /
 ### request
 ```
@@ -15,7 +23,20 @@ curl -X GET -H "Cache-Control: no-cache" "http://localhost:8080"
 ### response
 The response should be HTTP 200 (OK), and something like the following in the body:
 ```
-[{"Plaza_Name":"CLW","Interval_Starting":"2015-11-02 16:05:00.000","Pricing_Module":"0.60","Message_Module":"HOV 2+ NO TOLL"},{"Plaza_Name":"FSW","Interval_Starting":"2015-11-02 16:05:00.000","Pricing_Module":"1.80","Message_Module":"HOV 2+ NO TOLL"}]
+[
+    {
+        "Plaza_Name": "CLW",
+        "Interval_Starting": 1461606307268,
+        "Pricing_Module": "0.60",
+        "Message_Module": "HOV 2+ NO TOLL"
+    },
+    {
+        "Plaza_Name": "FSW",
+        "Interval_Starting": 1461606307268,
+        "Pricing_Module": "1.80",
+        "Message_Module": "HOV 2+ NO TOLL"
+    }
+]
 ```
 
 ## PUT /
@@ -24,18 +45,19 @@ The response should be HTTP 200 (OK), and something like the following in the bo
 curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
   {
     "Plaza_Name": "CLW",
-    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Interval_Starting": 1461606307268,
     "Pricing_Module": "0.55",
     "Message_Module": "HOV 2+ NO TOLL"
   },
   {
     "Plaza_Name": "FSW",
-    "Interval_Starting": "2015-11-02 16:05:00.000",
+    "Interval_Starting": 1461606307268,
     "Pricing_Module": "1.80",
     "Message_Module": "HOV 2+ NO TOLL"
   }
 ]' "http://localhost:8080"
 ```
+
 
 ### response
 Expected result should be an empty HTTP 200 (OK) response.
