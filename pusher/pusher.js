@@ -1,7 +1,8 @@
 'use strict';
 
 const http = require('http')
-	, util = require('util');
+	, util = require('util')
+	, cmd = require('node-cmd');
 
 
 var API_HOST = '54.218.16.105';
@@ -10,31 +11,66 @@ var FALLBACK_INTERVAL = 2*1000; // 2 seconds
 var next_update_in_ms = 0;
 
 
+function parseSqlCmd(response){
+  var lines = response.split('\n');
+  var labels = lines[0].replace(/\s\s+/g, ' ').split(' ');
+  // console.log('labels : ', labels);
+  var split = lines[1].split(' ');
+  var counts = [];
+  for (var i=0; i < split.length; i++){
+  	counts.push(split[i].length);
+  }
+  var res = [];
+  var label_index = 0;
+  for (var i=2; i<lines.length; i++){
+  	var line = lines[i];
+    var obj = {};
+    
+    var line_index = 0;
+    // console.log(line, line.length);
+    for (var j=0; j < counts.length; j++){
+      var end = line_index+counts[j];
+      var sliced = line.slice(line_index, end-1);
+    	obj[labels[label_index]] = sliced.trim();
+      // console.log(labels[label_index]+' : '+obj[labels[label_index]]);
+      line_index += counts[j]+1;
+      label_index++;
+    }
+    res.push(obj);
+    label_index = 0
+  }
+  res.pop();
+  return res;
+}
 
-function getData(){
-  // TODO: get this from the database
-
-  function getRandomTollAmount(){
-      var cents_ones = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-      var cents_tens = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-      var dollars_ones = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-      return  dollars_ones +  '.' + cents_tens + cents_ones;
+function pulse(){
+  console.log('running stored procedure...');
+  var this_update_in_ms = new Date().getTime();
+  cmd.get(
+        'sqlcmd.exe -S "VTA00DB01" -d DMS -Q "DMS.dbo.uspGetSignMessageCurrent"',
+        function(data){
+			var data = parseSqlCmd(data);
+			var clean_data = [];
+			for (var i = 0; i < data.length; i++){
+				var obj = data[i];
+				obj['Interval_Starting'] = new Date(obj['Interval_Starting']).getTime();
+				this_update_in_ms = obj['Interval_Starting'];
+				clean_data.push(obj)
+			}
+			sendData(clean_data);
+        }
+    );
+	
+	  
+  // get new data five minutes from the time given
+  next_update_in_ms = (this_update_in_ms + UPDATE_INTERVAL) - (new Date().getTime());
+  if (next_update_in_ms < 0) {
+    // if for some reason the data is old, then try again in 2 seconds.
+    next_update_in_ms = FALLBACK_INTERVAL;
   }
 
-  return [
-    {
-      "Plaza_Name": "CLW",
-      "Interval_Starting": (new Date()).getTime(),
-      "Pricing_Module": getRandomTollAmount(),
-      "Message_Module": "HOV 2+ NO TOLL"
-    },
-    {
-      "Plaza_Name": "FSW",
-      "Interval_Starting": (new Date()).getTime(),
-      "Pricing_Module": getRandomTollAmount(),
-      "Message_Module": "HOV 2+ NO TOLL"
-    }
-  ];
+  console.log('Next update in '+next_update_in_ms+' milliseconds');
+  setTimeout(pulse, next_update_in_ms);
 }
 
 
@@ -69,26 +105,9 @@ function sendData(data){
   });
   console.log(body);
   request.end(body);
+
 }
 
-
-
-function pulse(){
-  console.log('getting data');
-  var data = getData();
-
-  // get new data five minutes from the time given
-  next_update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
-  if (next_update_in_ms < 0) {
-    // if for some reason the data is old, then try again in 2 seconds.
-    next_update_in_ms = FALLBACK_INTERVAL;
-  }
-
-  sendData(data);
-
-  console.log('Next update in '+next_update_in_ms+' milliseconds');
-  setTimeout(pulse, next_update_in_ms);
-}
 
 
 

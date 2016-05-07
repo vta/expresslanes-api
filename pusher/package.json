@@ -1,12 +1,24 @@
 {
   "name": "expresslanes_pusher",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Pusher component of the VTA Express Lanes API",
+  "author": "Kyle Falconer",
+  "main": "pusher.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node pusher.js"
   },
-  "author": "Kyle Falconer",
-  "license": "MIT"
+  "dependencies": {
+    "node-cmd": "^1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vta/expresslanes-api.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vta/expresslanes-api/issues"
+  },
+  "homepage": "https://github.com/vta/expresslanes-api#readme",
+  "devDependencies": {}
 }
