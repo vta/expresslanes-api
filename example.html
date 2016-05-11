@@ -7,85 +7,96 @@
     <title>Express Lanes</title>
 
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet" />
     <link href="//overpass-30e2.kxcdn.com/overpass.css" rel="stylesheet" />
     <style>
-    body {background-color:#cfcfcf;}
+    body {background-color:#cfcfcf; font-family: helvetica, sans-serif;}
+    div {display:block; -moz-box-sizing: border-box; box-sizing: border-box;}
+    .el-wrapper{ float: left; margin:20px;}
+    .el-wrapper p {text-align: center;}
+    .el-wrapper>div {position:relative;margin-left:auto;margin-right:auto;}
     .expresslane {
-    	display:block;
-    	box-sizing: border-box; 
-    	width:280px;height:160px;
-    	-webkit-border-radius: 30px;
-    	-moz-border-radius: 30px;
-    	border-radius: 30px;
-    	border:15px solid #FFFFFF;
-    	background-color:#105632;
-    	margin:20px;
-    	padding:20px;
-    	color:#fff;
-    	font-weight:bold;
-    	font-family: Overpass, helvetica, sans-serif;
-    	text-align: left;
- 	}
+        width:280px;height:160px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        border:15px solid #FFFFFF;
+        background-color:#105632;
+        margin:20px;
+        padding:20px;
+        color:#fff;
+        font-weight:bold;
+        font-family: Overpass, helvetica, sans-serif;
+        text-align: left;
+    }
     </style>
 </head>
 <body>
-    
-    
-    <div id="output">
+
+    <div class="el-wrapper">
+        <p>AJAX Demo using <a href="https://api.jquery.com/jquery.get/">jQuery</a>.</p>
+        <div id="output-ajax">
+        </div>
     </div>
 
 
     <script type="text/javascript">
     //<![CDATA[
-    	
-    	var API_ENDPOINT = 'http://54.218.16.105/';
+        
+        var API_ENDPOINT = 'http://54.218.16.105/';
+        //var API_ENDPOINT = 'http://localhost:8080';
 
-    	var lanes = {
-    		"CLW" : "SR 237 West to Sunnyvale",
-    		"FSE" : "I-880 North to Oakland"
-    	};
+        var lanes = {
+            "CLW" : "SR 237 West to Sunnyvale",
+            "FSE" : "I-880 North to Oakland"
+        };
 
-	var UPDATE_INTERVAL = 5*60*1000 + 1000;  // 5 minutes + latency allowance
-	var FALLBACK_INTERVAL = 30*60*1000;	 // 30 seconds
-    	var update_in_ms = 0;
+        var UPDATE_INTERVAL = 5*60*1000 + 1000;  // 5 minutes + latency allowance
+        var FALLBACK_INTERVAL = 10*1000;  // 30 seconds
+        var update_in_ms = 0;
 
-    	function fetch(){
-    		window.console.log('getting data');
-    		$.get(API_ENDPOINT)
-		    .done(function(data){
-		    	if (!data || !data.length || data.length < 1){
-		    		$('#output').text('no data!');
-		    		return;
-		    	}
-		    	$('#output').empty();
+    
 
-		    	// get new data five minutes from the time given
-	    		update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
-	    		if (update_in_ms < 0) {
-	    			// if for some reason the data is old, then try again in 30 seconds.
-	    			update_in_ms = FALLBACK_INTERVAL;
-	    		}
+        function fetch(){
+            window.console.log('getting data');
+            $.get(API_ENDPOINT)
+            .done(function(data){
+                if (!data || !data.length || data.length < 1){
+                    $('#output-ajax').text('no data!');
+                    return;
+                }
+                $('#output-ajax').empty();
 
-		    	for (var i=0; i < data.length; i++){
-		    		var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
-		    		var content = 
-			    		  lanes[data[i]['Plaza_Name']] + '<br/>'
-			    		+ 'Toll : '+price +'<br/>'
-			    		+ 'Message : ' + data[i]['Message_Module'];
-		    		$('<div/>').addClass('expresslane').html(content).appendTo($('#output'));
-		    	}
+                // get new data five minutes from the time given
+                update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
+                if (update_in_ms < 0) {
+                    // if for some reason the data is old, then try again in 30 seconds.
+                    update_in_ms = FALLBACK_INTERVAL;
+                }
 
-		    	window.console.log('Next update in '+update_in_ms+' milliseconds');
-		    	setTimeout(fetch, update_in_ms);
-		    });
-    	}
+                for (var i=0; i < data.length; i++){
+                    var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
+                    var content = 
+                          lanes[data[i]['Plaza_Name']] + '<br/>'
+                        + 'Toll : '+price +'<br/>'
+                        + 'Message : ' + data[i]['Message_Module'];
+                    $('<div/>').addClass('expresslane').html(content).appendTo($('#output-ajax'));
+                }
+
+                window.console.log('Next update in '+update_in_ms+' milliseconds');
+                
+                $('<p>').text('Last updated at '+(new Date()).toLocaleTimeString()).appendTo('#output-ajax');
+                $('<p>').text('Next update at '+(new Date(new Date().getTime() + update_in_ms)).toLocaleTimeString()).appendTo('#output-ajax');
+                setTimeout(fetch, update_in_ms);
+            });
+        }
 
         (function() {
             "use strict";
             document.addEventListener("touchstart", function(){}, true);
             window.addEventListener('load', function(){
-            	setTimeout(fetch, update_in_ms);
+                setTimeout(fetch, update_in_ms);
             }, false);
         })();
     //]]>
