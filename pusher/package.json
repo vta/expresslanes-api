@@ -9,7 +9,8 @@
     "start": "node pusher.js"
   },
   "dependencies": {
-    "node-cmd": "^1.1.1"
+    "node-cmd": "^1.1.1",
+    "node-rsa": "^0.3.2"
   },
   "repository": {
     "type": "git",

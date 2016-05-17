@@ -2,13 +2,20 @@
 
 const http = require('http')
   , util = require('util')
+  , fs = require('fs')
+  , NodeRSA = require('node-rsa')
   , cmd = require('node-cmd');
 
-
-var API_HOST = '54.218.16.105';
-var UPDATE_INTERVAL = 5*60*1000;  // five minutes
-var FALLBACK_INTERVAL = 2*1000; // 2 seconds
 var next_update_in_ms = 0;
+var FALLBACK_INTERVAL = 2*1000; // 2 seconds
+var API_HOST = ['54.218.16.105', 80];
+var UPDATE_INTERVAL = 6*60*1000;  // six minutes
+//var API_HOST = ['localhost', 8080];
+//var UPDATE_INTERVAL = 30*1000;  // 30 seconds
+
+
+var key_data = fs.readFileSync('expresslanesapi.key.pub', 'utf8');
+var publickey = new NodeRSA(key_data);
 
 
 function parseSqlCmd(response){
@@ -46,9 +53,38 @@ function parseSqlCmd(response){
 function pulse(){
   console.log('running stored procedure...');
   var this_update_in_ms = new Date().getTime();
+
+  //var dummy = [
+  //  {
+  //    "biCalSeqID": "35897",
+  //    "Plaza_Name": "FSE",
+  //    "Interval_Starting": (new Date()).getTime(),
+  //    "Pricing_Module": "1.90",
+  //    "Message_Module": "HOV 2+ NO TOLL",
+  //    "User": "SYSTEM",
+  //    "Algorithm_Mode": "EL Speed"
+  //  },
+  //  {
+  //    "biCalSeqID": "35897",
+  //    "Plaza_Name": "CLW",
+  //    "Interval_Starting": (new Date()).getTime(),
+  //    "Pricing_Module": "1.80",
+  //    "Message_Module": "HOV 2+ NO TOLL",
+  //    "User": "SYSTEM",
+  //    "Algorithm_Mode": "EL Speed"
+  //  }
+  //];
+  //sendData(dummy);
+  //return;
+
   cmd.get(
         'sqlcmd.exe -S "VTA00DB01" -d DMS -Q "DMS.dbo.uspGetSignMessageCurrent"',
         function(data){
+          if (data.length === 0){
+            console.error('Failed to run the SQL query.');
+            return;
+          }
+          
           var data = parseSqlCmd(data);
           var clean_data = [];
           for (var i = 0; i < data.length; i++){
@@ -74,12 +110,20 @@ function pulse(){
 }
 
 
+
 function sendData(data){
-  var body = JSON.stringify(data);
+
+  var toll_data = JSON.stringify(data);
+  
+  console.log('data to encrypt: ', toll_data);
+  toll_data = publickey.encrypt(toll_data, 'base64');
+  console.log('encrypted to: ', toll_data);
+
+  var body = JSON.stringify({"tolls" : toll_data});
 
   var request = new http.ClientRequest({
-      host: API_HOST,
-      port: 80,
+      host: API_HOST[0],
+      port: API_HOST[1],
       path: "/",
       method: "PUT",
       "agent":false,
@@ -105,8 +149,6 @@ function sendData(data){
   console.log(body);
   request.end(body);
 }
-
-
 
 
 console.log('Running...');

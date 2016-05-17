@@ -5,13 +5,18 @@
   "author": "Kyle Falconer <Kyle.Falconer@vta.org>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.3",
     "ajv": "^4.0.2",
-    "cors":"^2.7.1"
+    "body-parser": "^1.15.0",
+    "chai": "^3.5.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "mocha": "^2.4.5",
+    "node-rsa": "^0.3.2",
+    "socket.io": "^1.4.6"
   },
   "directories": {
     "test": "test"
