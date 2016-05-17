@@ -8,7 +8,7 @@ const http = require('http')
 
 var next_update_in_ms = 0;
 var FALLBACK_INTERVAL = 2*1000; // 2 seconds
-var API_HOST = ['54.218.16.105', 80];
+var API_HOST = ['ec2-54-218-16-105.us-west-2.compute.amazonaws.com', 80];
 var UPDATE_INTERVAL = 6*60*1000;  // six minutes
 // var API_HOST = ['localhost', 8080];
 // var UPDATE_INTERVAL = 30*1000;  // 30 seconds
@@ -54,28 +54,28 @@ function pulse(){
   console.log('running stored procedure...');
   var this_update_in_ms = new Date().getTime();
 
-  var dummy = [
-    {
-      "biCalSeqID": "35897",
-      "Plaza_Name": "FSE",
-      "Interval_Starting": (new Date()).getTime(),
-      "Pricing_Module": "1.90",
-      "Message_Module": "HOV 2+ NO TOLL",
-      "User": "SYSTEM",
-      "Algorithm_Mode": "EL Speed"
-    },
-    {
-      "biCalSeqID": "35897",
-      "Plaza_Name": "CLW",
-      "Interval_Starting": (new Date()).getTime(),
-      "Pricing_Module": "1.80",
-      "Message_Module": "HOV 2+ NO TOLL",
-      "User": "SYSTEM",
-      "Algorithm_Mode": "EL Speed"
-    }
-  ];
-  sendData(dummy);
-  return;
+  //var dummy = [
+  //  {
+  //    "biCalSeqID": "35897",
+  //    "Plaza_Name": "FSE",
+  //    "Interval_Starting": (new Date()).getTime(),
+  //    "Pricing_Module": "1.90",
+  //    "Message_Module": "HOV 2+ NO TOLL",
+  //    "User": "SYSTEM",
+  //    "Algorithm_Mode": "EL Speed"
+  //  },
+  //  {
+  //    "biCalSeqID": "35897",
+  //    "Plaza_Name": "CLW",
+  //    "Interval_Starting": (new Date()).getTime(),
+  //    "Pricing_Module": "1.80",
+  //    "Message_Module": "HOV 2+ NO TOLL",
+  //    "User": "SYSTEM",
+  //    "Algorithm_Mode": "EL Speed"
+  //  }
+  //];
+  //sendData(dummy);
+  //return;
 
   cmd.get(
         'sqlcmd.exe -S "VTA00DB01" -d DMS -Q "DMS.dbo.uspGetSignMessageCurrent"',
