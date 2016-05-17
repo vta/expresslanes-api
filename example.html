@@ -44,8 +44,8 @@
     <script type="text/javascript">
     //<![CDATA[
         
-        var API_ENDPOINT = 'http://ec2-54-218-16-105.us-west-2.compute.amazonaws.com';
-        //var API_ENDPOINT = 'http://localhost:8080';
+        //var API_ENDPOINT = 'http://ec2-54-218-16-105.us-west-2.compute.amazonaws.com';
+        var API_ENDPOINT = 'http://localhost:8080';
 
         var lanes = {
             "CLW" : "SR 237 West to Sunnyvale",
@@ -75,6 +75,8 @@
                     update_in_ms = FALLBACK_INTERVAL;
                 }
 
+                data.sort(function(a, b){ return a['Plaza_Name'] > b['Plaza_Name']});
+
                 for (var i=0; i < data.length; i++){
                     var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
                     var content = 
@@ -101,6 +103,34 @@
         })();
     //]]>
     </script>
+
+   <div class="el-wrapper">
+        <p>WebSocket Demo using <a href="http://socket.io/">socket.io</a>.</p>
+        <div id="output-sockets">
+        </div>
+    </div> 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
+    <script>
+    //<![CDATA[
+      var socket = io(API_ENDPOINT);
+      socket.on('toll', function(data){
+            $('#output-sockets').empty();
+
+            for (var i=0; i < data.length; i++){
+                var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
+                var content = 
+                      lanes[data[i]['Plaza_Name']] + '<br/>'
+                    + 'Toll : '+price +'<br/>'
+                    + 'Message : ' + data[i]['Message_Module'];
+                $('<div/>').addClass('expresslane').html(content).appendTo($('#output-sockets'));
+            }
+            $('<p>').text('Last updated at '+(new Date()).toLocaleTimeString()).appendTo('#output-sockets');
+            updateStatus();
+      });
+    //]]>
+    </script>
+
 </body>
 
 </html>

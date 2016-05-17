@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-var key_data = fs.readFileSync('expresslanesapi.key.pem', 'utf8');
+var key_data = fs.readFileSync('keys/expresslanesapi.key.pem', 'utf8');
 var privatekey = new NodeRSA(key_data);
 
 

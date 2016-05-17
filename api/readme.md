@@ -103,3 +103,15 @@ To run the built image:
 
     $ docker run -d -p 8080:8080 scvta/vta-express-lanes-api:latest
 
+
+### Running in production
+First, regenerate the public/private keypair using pusher/keygen.js, then copy the public key into pusher/keys and the private key into a secure folder on the server which will run the docker container, such as `/home/ec2-user/keys`.
+
+Now, pull down the latest image from Docker Hub:
+
+    docker pull scvta/vta-express-lanes-api:latest
+
+Then run the image, passing the key along into the `/usr/src/app/` folder inside the docker container.
+
+    docker run -d -v /home/ec2-user/keys:/usr/src/app/keys -p 80:8080 scvta/vta-express-lanes-api:latest
+
