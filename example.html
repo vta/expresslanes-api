@@ -13,23 +13,42 @@
     <style>
     body {background-color:#cfcfcf; font-family: helvetica, sans-serif;}
     div {display:block; -moz-box-sizing: border-box; box-sizing: border-box;}
-    .el-wrapper{ float: left; margin:20px;}
+    .el-wrapper{ float: left; margin:20px;width: 430px;}
     .el-wrapper p {text-align: center;}
     .el-wrapper>div {position:relative;margin-left:auto;margin-right:auto;}
     .expresslane {
-        width:280px;height:160px;
-        -webkit-border-radius: 30px;
-        -moz-border-radius: 30px;
-        border-radius: 30px;
-        border:15px solid #FFFFFF;
-        background-color:#105632;
-        margin:20px;
-        padding:20px;
+        background-color:#ffffff;
         color:#fff;
         font-weight:bold;
         font-family: Overpass, helvetica, sans-serif;
         text-align: left;
+        margin-bottom:40px;
     }
+    .expresslane_inner_wrapper {color:#000; font-size:1.25em;width:100%;height:100%;padding:0;margin:0;-webkit-border-radius: 15px;border:2px solid #000000;
+        -moz-border-radius: 15px;
+        border-radius: 15px;overflow:hidden;}
+
+    .expresslane .row.fastrak { width: 290px;}
+    .expresslane .row.fastrak img+span {margin-top: 13px;float:right;}
+    .expresslane .row.fastrak img {padding:2px 8px; border: 4px solid #AD369B;}
+    .expresslane .row.toll { width: 420px;}
+
+    .expresslane .el_message {margin-top:5px;}
+
+    .expresslane span {display:inline-block;}
+
+    .expresslane_inner_wrapper>div:first-child{margin-top:0px;}
+    .expresslane_inner_wrapper>div {width:auto;margin-left:auto;margin-right:auto;margin-top:10px;margin-bottom:10px;padding-right: 20px;padding-left: 20px;}
+    .expresslane_inner_wrapper>div:after {float:none;clear:both;display:block;content:'';}
+
+    .expresslane .el_message {width:80%; padding:10px 10px; color:#fff; background-color: #A0A0A0; border:1px solid #000;margin-left:auto;margin-right:auto;text-align:center;}
+
+    .express_lane_heading {width:100%; padding:10px 20px;background-color:#0B7F00;color:#fff; font-size:1.5em;text-transform: uppercase;text-align:center;}
+    .sign_icon {width:50px;float:left;margin-right:20px;}
+    .fastrak_logo {height:30px;float:left;}
+    .el_sign_label {color:#000;float:left;text-align:center;line-height: 1.1em;}
+    .el_toll {float:right;padding:10px 60px; color:#fff; background-color: #A0A0A0; border:1px solid #000;}
+
     </style>
 </head>
 <body>
@@ -48,15 +67,37 @@
         // var API_ENDPOINT = 'http://localhost:8080';
 
         var lanes = {
-            "CLW" : "SR 237 West to Sunnyvale",
-            "FSE" : "I-880 North to Oakland"
+            "CLW" : {"label":"WEST</br>Mtn View", "icon" : "public/CA-237.png", "alt":"California 237 West"},
+            "FSE" : {"label":"NORTH</br>Oakland", "icon" : "public/I-880.png", "alt":"Interstate 880 North"},
         };
 
-        var UPDATE_INTERVAL = 5*60*1000 + 1000;  // 5 minutes + latency allowance
+        var UPDATE_INTERVAL = 6*60*1000 + 400;  // 5 minutes + latency allowance
         var FALLBACK_INTERVAL = 10*1000;  // 30 seconds
         var update_in_ms = 0;
 
-    
+        function buildSign(lane_id, price, message){
+            var sign_output = $('<div/>').addClass('expresslane');
+            var el_inner = $('<div/>').addClass('expresslane_inner_wrapper').appendTo(sign_output);
+            $('<div/>').addClass('express_lane_heading').text('Express Lane').appendTo(el_inner);
+
+            var ft_row = $('<div/>')
+                .addClass('row')
+                .addClass('fastrak')
+                .html('<img src="public/fastrak_logo.png" alt="FasTrak logo" class="fastrak_logo"/>  <span>TOLL</span>')
+                .appendTo(el_inner);
+
+            var toll_row = $('<div/>')
+                .addClass('row')
+                .addClass('toll')
+                .html('<img src="'+lanes[lane_id]['icon']+'" alt="'+lanes[lane_id]['alt']+'" class="sign_icon"/>'
+                    + '<div class="el_sign_label">'+lanes[lane_id]['label']+'</div>'
+                    + '<div class="el_toll">'+price+'</div>')
+                .appendTo(el_inner);
+
+            $('<div/>').addClass('el_message').text(message).appendTo(sign_output);
+            return sign_output;
+        }
+
 
         function fetch(){
             window.console.log('getting data');
@@ -78,12 +119,8 @@
                 data.sort(function(a, b){ return a['Plaza_Name'] > b['Plaza_Name']});
 
                 for (var i=0; i < data.length; i++){
-                    var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
-                    var content = 
-                          lanes[data[i]['Plaza_Name']] + '<br/>'
-                        + 'Toll : '+price +'<br/>'
-                        + 'Message : ' + data[i]['Message_Module'];
-                    $('<div/>').addClass('expresslane').html(content).appendTo($('#output-ajax'));
+                    var sign = buildSign(data[i]['Plaza_Name'], data[i]['Pricing_Module'], data[i]['Message_Module']);
+                    sign.appendTo($('#output-ajax'));
                 }
 
                 window.console.log('Next update in '+update_in_ms+' milliseconds');
@@ -117,16 +154,13 @@
       socket.on('toll', function(data){
             $('#output-sockets').empty();
 
+            data.sort(function(a, b){ return a['Plaza_Name'] > b['Plaza_Name']});
+
             for (var i=0; i < data.length; i++){
-                var price = data[i]['Pricing_Module'].length === 0 ? 'Free' : '$' + data[i]['Pricing_Module'];
-                var content = 
-                      lanes[data[i]['Plaza_Name']] + '<br/>'
-                    + 'Toll : '+price +'<br/>'
-                    + 'Message : ' + data[i]['Message_Module'];
-                $('<div/>').addClass('expresslane').html(content).appendTo($('#output-sockets'));
+                var sign = buildSign(data[i]['Plaza_Name'], data[i]['Pricing_Module'], data[i]['Message_Module']);
+                    sign.appendTo($('#output-sockets'));
             }
             $('<p>').text('Last updated at '+(new Date()).toLocaleTimeString()).appendTo('#output-sockets');
-            updateStatus();
       });
     //]]>
     </script>
