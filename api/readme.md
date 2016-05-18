@@ -24,47 +24,79 @@ curl -X GET -H "Cache-Control: no-cache" "http://localhost:8080"
 The response should be HTTP 200 (OK), and something like the following in the body:
 ```
 [
-    {
-        "Plaza_Name": "CLW",
-        "Interval_Starting": 1461606307268,
-        "Pricing_Module": "0.60",
-        "Message_Module": "HOV 2+ NO TOLL"
-    },
-    {
-        "Plaza_Name": "FSW",
-        "Interval_Starting": 1461606307268,
-        "Pricing_Module": "1.80",
-        "Message_Module": "HOV 2+ NO TOLL"
-    }
+  {
+    "biCalSeqID": "36039",
+    "Plaza_Name": "CLW",
+    "Interval_Starting": 1463610000000,
+    "Pricing_Module": "0.50",
+    "Message_Module": "HOV 2+ NO TOLL",
+    "User": "SYSTEM",
+    "Algorithm_Mode": "EL Speed"
+  },
+  {
+    "biCalSeqID": "36039",
+    "Plaza_Name": "FSE",
+    "Interval_Starting": 1463610000000,
+    "Pricing_Module": "2.50",
+    "Message_Module": "HOV 2+ NO TOLL",
+    "User": "SYSTEM",
+    "Algorithm_Mode": "EL Speed"
+  }
 ]
 ```
 
 ## PUT /
-### request
+Data that is submitted to the API is also in JSON format, and the data follows the same schema as that returned by the GET method.  must be encrypted and base64 encoded with the public key for it to be accepted. To see how this is done, check out the `sendData` function in [pusher.js](../pusher/pusher.js).
+
+A successful submission will be an empty HTTP 200 (OK) response.
+
+If the data is not formed correctly, a HTTP 400 (Bad Request) response will be given and an error object will be returned showing the error. A 400 response will also be given if the data is not encrypted properly.
+
+### Formats:
+
 ```
-curl -X PUT -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '[
-  {
-    "Plaza_Name": "CLW",
-    "Interval_Starting": 1461606307268,
-    "Pricing_Module": "0.55",
-    "Message_Module": "HOV 2+ NO TOLL"
-  },
-  {
-    "Plaza_Name": "FSW",
-    "Interval_Starting": 1461606307268,
-    "Pricing_Module": "1.80",
-    "Message_Module": "HOV 2+ NO TOLL"
-  }
-]' "http://localhost:8080"
+{
+  "tolls": "encrypted string containing an array of JSON objects"
+}
 ```
 
 
-### response
-Expected result should be an empty HTTP 200 (OK) response.
 
-If the data is not formed correctly, a HTTP 400 (Bad Request) response will be given and an error object will be returned showing the error.
+decrypted example:
+```
+{
+    "tolls": [
+        {
+            "biCalSeqID": "36039",
+            "Plaza_Name": "CLW",
+            "Interval_Starting": 1463610000000,
+            "Pricing_Module": "0.50",
+            "Message_Module": "HOV 2+ NO TOLL",
+            "User": "SYSTEM",
+            "Algorithm_Mode": "EL Speed"
+        },
+        {
+            "biCalSeqID": "36039",
+            "Plaza_Name": "FSE",
+            "Interval_Starting": 1463610000000,
+            "Pricing_Module": "2.50",
+            "Message_Module": "HOV 2+ NO TOLL",
+            "User": "SYSTEM",
+            "Algorithm_Mode": "EL Speed"
+        }
+    ]
+}
+```
 
-Example:
+After encypting the value for the `tolls` property, the result should look something like this:
+
+```
+{
+  "tolls": "MRp1fzvrK0...jMWeHoo="
+}
+```
+
+### Validation error example:
 ```
 {
   "error": [
