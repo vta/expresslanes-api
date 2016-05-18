@@ -46,20 +46,17 @@ The response should be HTTP 200 (OK), and something like the following in the bo
 ```
 
 ## PUT /
-Data that is submitted to the API is also in JSON format, and the data follows the same schema as that returned by the GET method.  must be encrypted and base64 encoded with the public key for it to be accepted. To see how this is done, check out the `sendData` function in [pusher.js](../pusher/pusher.js).
+Data that is submitted to the API is also in JSON format, and the data follows the same schema as that returned by the GET method, and is placed in a new property called `tolls`.  The value of the `tolls` property must be encrypted and base64 encoded with the public key for it to be accepted. To see how this is done, check out the `sendData` function in [pusher.js](../pusher/pusher.js).
 
 A successful submission will be an empty HTTP 200 (OK) response.
 
-If the data is not formed correctly, a HTTP 400 (Bad Request) response will be given and an error object will be returned showing the error. A 400 response will also be given if the data is not encrypted properly.
 
-### Formats:
-
+General data structure:
 ```
 {
   "tolls": "encrypted string containing an array of JSON objects"
 }
 ```
-
 
 
 decrypted example:
@@ -88,7 +85,7 @@ decrypted example:
 }
 ```
 
-After encypting the value for the `tolls` property, the result should look something like this:
+After encrypting the value for the `tolls` property, the result should look something like this:
 
 ```
 {
@@ -96,7 +93,10 @@ After encypting the value for the `tolls` property, the result should look somet
 }
 ```
 
-### Validation error example:
+
+If the data is not formed correctly, a HTTP 400 (Bad Request) response will be given and an error object will be returned showing the error. A 400 response will also be given if the data is not encrypted properly.
+
+Validation error example:
 ```
 {
   "error": [
