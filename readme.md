@@ -12,6 +12,3 @@ The API is packaged as a docker image on [Dockerhub](https://hub.docker.com/r/sc
 
 ## The client
 The client is demonstrated in [example.html](example.html). It works as the data consumer, getting information from the API and displaying it on a webpage.
-
-![screenshot of example.html in action](screenshot.png?raw=true "screenshot")
-
