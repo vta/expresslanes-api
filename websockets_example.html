@@ -88,63 +88,6 @@
     </script>
 
 
-    <!--
-    +===================================================================+
-    |                        AJAX IMPLEMENTATION                        |
-    +===================================================================+
-    -->
-    <div class="el-wrapper">
-        <p>AJAX Demo using <a href="https://api.jquery.com/jquery.get/">jQuery</a>.</p>
-        <div id="output-ajax">
-        </div>
-    </div>
-    <script type="text/javascript">
-    //<![CDATA[
-        var UPDATE_INTERVAL = 6*60*1000 + 400;  // 5 minutes + latency allowance
-        var FALLBACK_INTERVAL = 10*1000;  // 2 seconds
-        var update_in_ms = 0;
-
-        function fetch(){
-            window.console.log('getting data');
-            $.get(API_ENDPOINT)
-            .done(function(data){
-                if (!data || !data.length || data.length < 1){
-                    $('#output-ajax').text('no data!');
-                    return;
-                }
-                $('#output-ajax').empty();
-
-                // get new data five minutes from the time given
-                update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
-                if (update_in_ms < 0) {
-                    // if for some reason the data is old, then try again in 10 seconds.
-                    update_in_ms = FALLBACK_INTERVAL;
-                }
-
-                data.sort(function(a, b){ return a['Plaza_Name'] > b['Plaza_Name']});
-
-                for (var i=0; i < data.length; i++){
-                    var sign = buildSign(data[i]['Plaza_Name'], data[i]['Pricing_Module'], data[i]['Message_Module']);
-                    sign.appendTo($('#output-ajax'));
-                }
-
-                window.console.log('Next update in '+update_in_ms+' milliseconds');
-                
-                $('<p>').text('Last updated at '+(new Date()).toLocaleTimeString()).appendTo('#output-ajax');
-                $('<p>').text('Next update at '+(new Date(new Date().getTime() + update_in_ms)).toLocaleTimeString()).appendTo('#output-ajax');
-                setTimeout(fetch, update_in_ms);
-            });
-        }
-
-        (function() {
-            "use strict";
-            document.addEventListener("touchstart", function(){}, true);
-            window.addEventListener('load', function(){
-                setTimeout(fetch, update_in_ms);
-            }, false);
-        })();
-    //]]>
-    </script>
 
     <!--
     +===================================================================+

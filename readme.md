@@ -11,4 +11,4 @@ Pusher's job is to get the dynamic toll data from the database and send that to 
 The API is packaged as a docker image on [Dockerhub](https://hub.docker.com/r/scvta/vta-express-lanes-api/). Its job is to receive the data sent by the Pusher and re-serve it up to the clients.
 
 ## The client
-The client is demonstrated in [example.html](example.html). It works as the data consumer, getting information from the API and displaying it on a webpage.
+The client is demonstrated in [AJAX example](ajax_example.html) and [WebSockets example](websockets_example.html). The client works as the data consumer, getting information from the API and displaying it on a webpage.
