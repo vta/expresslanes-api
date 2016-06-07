@@ -44,16 +44,12 @@
 <div>
 <style scoped="" type="text/css">
 @import url(//overpass-30e2.kxcdn.com/overpass.css);
-.el-wrapper { min-width:360px;margin:5px;}
+.el-wrapper { min-width:275px; margin:5px;}
 .el-wrapper, .el-wrapper * {box-sizing: border-box;}
 .el-wrapper p { text-align: center; }
 .el-wrapper>div { position: relative;  margin-left: auto;  margin-right: auto; }
 
-.el-wrapper.hotdog { width:270px;min-width:270px; }
-.el-wrapper.hotdog {float:left;}
-.el-wrapper.hotdog .expresslane:first-child{marging-left:0;}
-
-.expresslane { background-color: #ffffff;  color: #fff;  font-weight: bold;  font-family: Overpass, helvetica, sans-serif;  text-align: left;  margin-bottom: 40px; }
+.expresslane { max-width:500px;background-color: #ffffff;  color: #fff;  font-weight: bold;  font-family: Overpass, helvetica, sans-serif;  text-align: left;  margin-bottom: 40px; }
  .expresslane_inner_wrapper { color: #000;  font-size: 1em;  width: 100%;  height: 100%;  padding: 0;  margin: 0;  -webkit-border-radius: 15px;  border: 2px solid #000000;  -moz-border-radius: 15px;  border-radius: 15px;  overflow: hidden; }
  .expresslane_inner_wrapper>div:first-child { margin-top: 0px; }
  .expresslane_inner_wrapper>div { width: auto;  margin-left: auto;  margin-right: auto;  margin-top: 10px;  margin-bottom: 10px;  padding-right: 10px;  padding-left: 10px; }
@@ -80,9 +76,16 @@
 
 .expresslane .row.message {width:100%; display:block;}
 .expresslane .row.message .el_message { display:block;font-size:1.1em; min-height:1.5em;margin-top: 5px;  width: 80%;  padding: 10px 10px;  color: #fff;  background-color: #303030;  border: 1px solid #000; margin-left:auto;margin-right:auto; text-align: center; }
+@media only screen and (min-width: 550px) {
+    .el-wrapper { width:50%;min-width:50%;margin: 0; padding: 5px; }
+    .el-wrapper:first-child{padding-right: 0; }
+    .el-wrapper:last-child{padding-left: 0; }
+    .el-wrapper {float:left;}
+    .el-wrapper .expresslane:first-child{marging-left:0;}
+}
 </style>
 
-<div class="el-wrapper hotdog" id="CLW">
+<div class="el-wrapper" id="CLW">
     <div class="expresslane">
         <div class="expresslane_inner_wrapper">
             <div class="express_lane_heading">Express Lane</div>
@@ -111,7 +114,7 @@
         </div>
     </div>
 </div>
-<div class="el-wrapper hotdog" id="FSE">
+<div class="el-wrapper" id="FSE">
     <div class="expresslane">
         <div class="expresslane_inner_wrapper">
             <div class="express_lane_heading">Express Lane</div>
