@@ -58,9 +58,16 @@
         
         var API_ENDPOINT = 'http://ec2-54-218-16-105.us-west-2.compute.amazonaws.com';
 
+
         var lanes = {
-            "CLW" : {"label":"WEST</br>Mtn View", "icon" : "public/CA-237.png", "alt":"California 237 West"},
-            "FSE" : {"label":"NORTH</br>Oakland", "icon" : "public/I-880.png", "alt":"Interstate 880 North"},
+            "CLW" : {
+                "label":"WEST</br>Mtn View", 
+                "icon" : "http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png", 
+                "alt":"California 237 West"},
+            "FSE" : {
+                "label":"NORTH</br>Oakland", 
+                "icon" : "http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png", 
+                "alt":"Interstate 880 North"},
         };
 
         function buildSign(lane_id, price, message){
@@ -71,7 +78,7 @@
             var ft_row = $('<div/>')
                 .addClass('row')
                 .addClass('fastrak')
-                .html('<img src="public/fastrak_logo.png" alt="FasTrak logo" class="fastrak_logo"/>  <span>TOLL</span>')
+                .html('<img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak logo" class="fastrak_logo"/>  <span>TOLL</span>')
                 .appendTo(el_inner);
 
             var toll_row = $('<div/>')
