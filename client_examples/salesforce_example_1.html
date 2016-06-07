@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Express Lanes</title>
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet" />
+
+    <style>
+    /* vta.org styles
+    #maincontent {
+        width: 77%;
+        margin: 40px auto;
+        background: white;
+        max-width: 1920px;
+        min-width: 1036px;
+    }
+    .three-col {
+        margin-left: 8px;
+        width: 55%;
+    }
+    .three-col { overflow: hidden;} */
+    </style>
+
+</head>
+<body>
+
+    <div id="maincontent">
+
+
+
+    <div class="three-col">
+
+    <!--
+    +===================================================================+
+    |                    START OF EXPRESS LANES CODE                    |
+    +===================================================================+
+    -->
+
+<div>
+<style scoped="" type="text/css">
+@import url(//overpass-30e2.kxcdn.com/overpass.css);
+.el-wrapper { min-width:370px;margin-left:5px;margin-right:5px; }
+.el-wrapper, .el-wrapper * {box-sizing: border-box;}
+.el-wrapper p { text-align: center; }
+.el-wrapper>div { position: relative;  margin-left: auto;  margin-right: auto; }
+
+.el-wrapper.hotdog { width:270px;min-width:270px; }
+.el-wrapper.hotdog {float:left;}
+.el-wrapper.hotdog .expresslane:first-child{marging-left:0;}
+
+.expresslane { background-color: #ffffff;  color: #fff;  font-weight: bold;  font-family: Overpass, helvetica, sans-serif;  text-align: left;  margin-bottom: 40px; }
+ .expresslane_inner_wrapper { color: #000;  font-size: 1em;  width: 100%;  height: 100%;  padding: 0;  margin: 0;  -webkit-border-radius: 15px;  border: 2px solid #000000;  -moz-border-radius: 15px;  border-radius: 15px;  overflow: hidden; }
+ .expresslane_inner_wrapper>div:first-child { margin-top: 0px; }
+ .expresslane_inner_wrapper>div { width: auto;  margin-left: auto;  margin-right: auto;  margin-top: 10px;  margin-bottom: 10px;  padding-right: 10px;  padding-left: 10px; }
+ .expresslane_inner_wrapper>div:after { float: none;  clear: both;  display: block;  content: ''; }
+ .express_lane_heading { width: 100%;  padding: 10px 20px;  background-color: #0B7F00;  color: #fff;  font-size: 1.25em;  text-transform: uppercase;  text-align: center;  letter-spacing: 2px; }
+
+.expresslane_heading {font-size:1.2em; line-height:1.2em;color:#303030;text-align: center;}
+
+.expresslane .row {display:table; box-sizing: border-box;width:auto;text-align: center; margin-left:auto;margin-right:auto;}
+.expresslane .row>* {display:table-cell;vertical-align: middle;padding-left: 5px; padding-right: 5px;} 
+
+.expresslane .row.label {text-transform: uppercase;}
+
+.expresslane .row.toll {width:auto;padding-left: 0; padding-right: 0;}
+.expresslane .row.toll .toll_wrapper {display:table; padding:0;}
+.expresslane .row.toll .toll_wrapper span{display:table-cell; vertical-align: middle;}
+.expresslane .row.toll .toll_wrapper span:first-child{padding-right:10px;}
+.expresslane .row.toll .fastrak_logo { width: 120px;  float: left; padding-left:0;padding-right:0;}
+.expresslane .row.toll .el_toll { min-height: 1.5em; height: 1.5em; color: #fff;  background-color: #303030;  border: 1px solid #000;  min-width: 80px; font-size:1.2em; line-height: 1.5em;  text-align: center; }
+
+.expresslane .row.label .el_sign{width:50px;}
+.expresslane .row.label .el_sign span{display:block; margin-left:auto;margin-right:auto; }
+.expresslane .row.label .sign_icon { width: 40px; margin-left:auto;margin-right:auto; }
+
+.expresslane .row.message {width:100%; display:block;}
+.expresslane .row.message .el_message { display:block;font-size:1.1em; min-height:1.5em;margin-top: 5px;  width: 80%;  padding: 10px 10px;  color: #fff;  background-color: #303030;  border: 1px solid #000; margin-left:auto;margin-right:auto; text-align: center; }
+</style>
+<div class="el-wrapper" id="CLW">
+    <div class="expresslane">
+        <div class="expresslane_inner_wrapper">
+            <div class="express_lane_heading">Express Lane</div>
+            <div class="row label">
+                <div class="el_sign">
+                    <span>South</span>
+                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
+                </div>
+                <span>to</span>
+                <div class="el_sign">
+                    <span>West</span>
+                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
+                </div>
+                <span>Mountain View</span>
+            </div>
+            <div class="row toll">
+                <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
+                <div class="toll_wrapper">
+                    <span>TOLL</span>
+                    <span class="el_toll"></span>
+                </div>
+            </div>
+            <div class="row message">
+                <span class="el_message"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="el-wrapper" id="FSE">
+    <div class="expresslane">
+        <div class="expresslane_inner_wrapper">
+            <div class="express_lane_heading">Express Lane</div>
+            <div class="row label">
+                <div class="el_sign">
+                    <span>East</span>
+                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
+                </div>
+                <span>to</span>
+                <div class="el_sign">
+                    <span>North</span>
+                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
+                </div>
+                <span>Oakland</span>
+            </div>
+            <div class="row toll">
+                <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
+                 <div class="toll_wrapper">
+                    <span>TOLL</span>
+                    <span class="el_toll"></span>
+                </div>
+            </div>
+            <div class="row message">
+                <span class="el_message"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
+  <script type="text/javascript">
+  //<![CDATA[
+    
+    var API_ENDPOINT = 'http://ec2-54-218-16-105.us-west-2.compute.amazonaws.com';
+
+    var socket = io(API_ENDPOINT);
+    socket.on('toll', function(data){
+        for (var i=0; i < data.length; i++){
+            var el_name = data[i]['Plaza_Name'];
+            var price = data[i]['Pricing_Module'];
+            if ($('#'+el_name)){
+                $('#'+el_name +' .el_toll').text((price === '') ? '' : '$'+price);
+                $('#'+el_name +' .el_message').text(data[i]['Message_Module']);
+            }
+        }
+        $('#el_update_status').text('Last updated at '+(new Date()).toLocaleTimeString());
+    });
+
+
+    //var UPDATE_INTERVAL = 6*60*1000 + 400;  // 5 minutes + latency allowance
+    //var FALLBACK_INTERVAL = 10*1000;  // 2 seconds
+    //var update_in_ms = 0;
+    //
+    //function fetch(){
+    //    console.log('getting data');
+    //    $.get(API_ENDPOINT)
+    //    .done(function(data){
+    //        console.log('got data: ', data);
+    //
+    //        // get new data five minutes from the time given
+    //        update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
+    //        if (update_in_ms < 0) {
+    //            // if for some reason the data is old, then try again in 10 seconds.
+    //            update_in_ms = FALLBACK_INTERVAL;
+    //        }
+    //
+    //        for (var i=0; i < data.length; i++){
+    //            var price = data[i]['Pricing_Module'];
+    //            var el_name = data[i]['Plaza_Name'];
+    //            if ($('#'+el_name)){
+    //                $('#'+el_name +' .el_toll').text((price === '') ? '' : '$'+price);
+    //                $('#'+el_name +' .el_message').text(data[i]['Message_Module']);
+    //            }
+    //        }
+    //
+    //        $('#el_update_status').text('Last updated at '+(new Date()).toLocaleTimeString());
+    //        setTimeout(fetch, update_in_ms);
+    //    });
+    //}
+    //
+    //(function (){
+    //    setTimeout(fetch, update_in_ms);
+    //})();
+    //]]>
+    </script>
+    </div>
+    <!--
+    +===================================================================+
+    |                     END OF EXPRESS LANES CODE                     |
+    +===================================================================+
+    -->
+
+    </div>
+</div>
+
+</body>
+
+</html>
