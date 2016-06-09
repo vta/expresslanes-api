@@ -50,7 +50,7 @@
 .el-wrapper, .el-wrapper * {box-sizing: border-box;}
 .el-wrapper p { text-align: center; }
 .el-wrapper>div { position: relative;  margin-left: auto;  margin-right: auto; }
-
+.el-wrapper h2 {text-align: center;margin-bottom:0; font-family: Overpass, helvetica, Arial, sans-serif; text-transform:uppercase;line-height: normal;font-size:1.5em;line-height:1.5em;color:rgb(65, 64, 64);font-weight:bold;}
 
 .expresslane { max-width:500px;background-color: #ffffff;  color: #fff;  font-weight: bold;  font-family: Overpass, helvetica, sans-serif;  text-align: left; }
 .expresslane_inner_wrapper { color: #000;  font-size: 1em;  width: 100%;  height: 100%;  padding: 0;  margin: 0;  -webkit-border-radius: 15px;  border: 2px solid #000000;  -moz-border-radius: 15px;  border-radius: 15px;  overflow: hidden; }
@@ -59,17 +59,15 @@
 .expresslane_inner_wrapper>div:after { float: none;  clear: both;  display: block;  content: ''; }
 .expresslane .el_heading { width: 100%;  padding: 10px 20px;  background-color: #0B7F00;  color: #fff;  font-size: 1.25em;  text-transform: uppercase;  text-align: center;  letter-spacing: 2px; }
 
-.expresslane .row {display:table; box-sizing: border-box;width:auto;text-align: center; margin-left:auto;margin-right:auto;}
+.expresslane .row { display:table;width:auto; box-sizing: border-box;height:40px;text-align: center; margin-left:auto;margin-right:auto;padding-left:0; padding-right:0; }
 .expresslane .row>* {display:table-cell;vertical-align: middle;padding-left: 5px; padding-right: 5px;} 
 .expresslane .row.label {text-transform: uppercase;}
 
-.expresslane .row.toll {width:auto;padding-left: 0; padding-right: 0;}
-.expresslane .row.toll .toll_wrapper {display:table; padding:0;}
-.expresslane .row.toll .toll_wrapper span{display:table-cell; vertical-align: middle;}
-.expresslane .row.toll .toll_wrapper span:first-child{padding-right:10px;}
-.expresslane .row.toll .fastrak_logo { width: 120px;  float: left; padding-left:0;padding-right:0;}
-.expresslane .row.toll .el_toll { min-height: 1.5em; height: 1.5em; color: #fff;  background-color: #303030;  border: 1px solid #000;  min-width: 80px; font-size:1.2em; line-height: 1.5em;  text-align: center; }
+.expresslane .row .toll_wrapper span{display:block;width:120px;margin-left:20px}
+.expresslane .row .fastrak_logo { padding: 2px 10px;  border: 3px solid #AD369B; height: 100%;  float: left;}
+.expresslane .row .el_toll { min-height: 1.5em; height: 1.5em; color: #fff;  background-color: #303030;  border: 1px solid #000;  min-width: 80px; font-size:1.2em; line-height: 1.5em;  text-align: center; }
 
+.expresslane .row.toll>span { width: 80px; text-align: center;}
 .expresslane .row.label .el_sign{width:50px;}
 .expresslane .row.label .el_sign span{display:block; margin-left:auto;margin-right:auto; }
 .expresslane .row.label .sign_icon { width: 40px; margin-left:auto;margin-right:auto; }
@@ -84,62 +82,51 @@
     .el-wrapper .expresslane:first-child{marging-left:0;}
 }
 </style>
-
 <div class="el-wrapper" id="CLW">
+    <h2>SR 237 Westbound</h2>
     <div class="expresslane">
         <div class="expresslane_inner_wrapper">
-            <div class="el_heading">Express Lane</div>
-            <div class="row label">
-                <div class="el_sign">
-                    <span>South</span>
-                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
-                </div>
-                <span>to</span>
-                <div class="el_sign">
-                    <span>West</span>
-                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
-                </div>
-                <span>Mountain View</span>
-            </div>
+            <div class="el_heading">Express Lane</div> 
             <div class="row toll">
                 <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
+                <span>TOLL</span>
+            </div>
+            <div class="row label">
+                <div class="el_sign">
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="State Route 237" class="sign_icon"/>
+                </div>
+                <span>West<br/>Mtn View</span>
                 <div class="toll_wrapper">
-                    <span>TOLL</span>
                     <span class="el_toll"></span>
                 </div>
             </div>
-            <div class="row message">
-                <span class="el_message"></span>
-            </div>
+        </div>
+        <div class="row message">
+            <span class="el_message"></span>
         </div>
     </div>
 </div>
 <div class="el-wrapper" id="FSE">
+    <h2>I-880 Northbound</h2>
     <div class="expresslane">
         <div class="expresslane_inner_wrapper">
             <div class="el_heading">Express Lane</div>
-            <div class="row label">
-                <div class="el_sign">
-                    <span>East</span>
-                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
-                </div>
-                <span>to</span>
-                <div class="el_sign">
-                    <span>North</span>
-                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
-                </div>
-                <span>Oakland</span>
-            </div>
             <div class="row toll">
                 <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
-                 <div class="toll_wrapper">
-                    <span>TOLL</span>
+                <span>TOLL</span>
+            </div>
+            <div class="row label">
+                <div class="el_sign">
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
+                </div>
+                <span>North<br/>Oakland</span>
+                <div class="toll_wrapper">
                     <span class="el_toll"></span>
                 </div>
             </div>
-            <div class="row message">
-                <span class="el_message"></span>
-            </div>
+        </div>
+        <div class="row message">
+            <span class="el_message"></span>
         </div>
     </div>
 </div>
