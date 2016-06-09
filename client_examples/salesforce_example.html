@@ -92,17 +92,17 @@
             <div class="row label">
                 <div class="el_sign">
                     <span>South</span>
-                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
                 </div>
                 <span>to</span>
                 <div class="el_sign">
                     <span>West</span>
-                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
                 </div>
                 <span>Mountain View</span>
             </div>
             <div class="row toll">
-                <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
+                <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
                 <div class="toll_wrapper">
                     <span>TOLL</span>
                     <span class="el_toll"></span>
@@ -121,17 +121,17 @@
             <div class="row label">
                 <div class="el_sign">
                     <span>East</span>
-                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/CA-237.png" alt="Interstate 880" class="sign_icon"/>
                 </div>
                 <span>to</span>
                 <div class="el_sign">
                     <span>North</span>
-                    <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
+                    <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/I-880.png" alt="Interstate 880" class="sign_icon"/>
                 </div>
                 <span>Oakland</span>
             </div>
             <div class="row toll">
-                <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
+                <img src="//vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/fastrak_logo.png" alt="FasTrak" class="fastrak_logo"/>
                  <div class="toll_wrapper">
                     <span>TOLL</span>
                     <span class="el_toll"></span>
@@ -162,42 +162,6 @@
         $('#el_update_status').text('Last updated at '+(new Date()).toLocaleTimeString());
     });
 
-
-    //var UPDATE_INTERVAL = 6*60*1000 + 400;  // 5 minutes + latency allowance
-    //var FALLBACK_INTERVAL = 10*1000;  // 2 seconds
-    //var update_in_ms = 0;
-    //
-    //function fetch(){
-    //    console.log('getting data');
-    //    $.get(API_ENDPOINT)
-    //    .done(function(data){
-    //        console.log('got data: ', data);
-    //
-    //        // get new data five minutes from the time given
-    //        update_in_ms = (data[0]['Interval_Starting'] + UPDATE_INTERVAL) - ((new Date().getTime()));
-    //        if (update_in_ms < 0) {
-    //            // if for some reason the data is old, then try again in 10 seconds.
-    //            update_in_ms = FALLBACK_INTERVAL;
-    //        }
-    //
-    //        for (var i=0; i < data.length; i++){
-    //            var price = data[i]['Pricing_Module'];
-    //            var el_name = data[i]['Plaza_Name'];
-    //            if ($('#'+el_name)){
-    //                $('#'+el_name +' .el_toll').text((price === '') ? '' : '$'+price);
-    //                $('#'+el_name +' .el_message').text(data[i]['Message_Module']);
-    //            }
-    //        }
-    //
-    //        $('#el_update_status').text('Last updated at '+(new Date()).toLocaleTimeString());
-    //        setTimeout(fetch, update_in_ms);
-    //    });
-    //}
-    //
-    //(function (){
-    //    setTimeout(fetch, update_in_ms);
-    //})();
-    //]]>
     </script>
     </div>
     <!--
