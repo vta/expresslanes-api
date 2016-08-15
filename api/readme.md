@@ -2,7 +2,7 @@
 
 ## Usage
 
-The [example.html](http://rawgit.com/vta/expresslanes-api/master/example.html) file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
+The [example.html](http://rawgit.com/vta/expresslanes-api/master/client_examples/salesforce_example.html) file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
 
 `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/) are recommended for testing. Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
 
