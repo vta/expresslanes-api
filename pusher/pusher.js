@@ -9,14 +9,16 @@ const http = require('http')
 var next_update_in_ms = 0;
 var FALLBACK_INTERVAL = 2*1000; // 2 seconds
 var API_HOST = ['ec2-54-218-16-105.us-west-2.compute.amazonaws.com', 80];
+var API_HOST_DEV = ['ec2-54-218-16-105.us-west-2.compute.amazonaws.com', 80];
 var UPDATE_INTERVAL = 6*60*1000;  // six minutes
 // var API_HOST = ['localhost', 8080];
 // var UPDATE_INTERVAL = 30*1000;  // 30 seconds
 
 
 var key_data = fs.readFileSync('keys/expresslanesapi.key.pub', 'utf8');
+var key_data_dev = fs.readFileSync('keys/expresslanesapi.key.pub', 'utf8');
 var publickey = new NodeRSA(key_data);
-
+var publickey_dev = new NodeRSA(key_data_dev);
 
 function parseSqlCmd(response){
   var lines = response.split('\n');
@@ -94,7 +96,12 @@ function pulse(){
             clean_data.push(obj);
           }
           console.log('Got data that was updated at '+new Date(this_update_in_ms).toLocaleTimeString());
-          sendData(clean_data);
+          
+          //Send to prod
+          sendData(clean_data, API_HOST, publickey);
+
+          //Send to Dev
+          sendData(clean_data, API_HOST_DEV, publickey_dev);
 
           // get new data five minutes from the time given
           next_update_in_ms =  (this_update_in_ms + UPDATE_INTERVAL) - (new Date()).getTime();
@@ -111,19 +118,19 @@ function pulse(){
 
 
 
-function sendData(data){
+function sendData(data, api_host_var, publickey_var){
 
   var toll_data = JSON.stringify(data);
   
   console.log('data to encrypt: ', toll_data);
-  toll_data = publickey.encrypt(toll_data, 'base64');
+  toll_data = publickey_var.encrypt(toll_data, 'base64');
   console.log('encrypted to: ', toll_data);
 
   var body = JSON.stringify({"tolls" : toll_data});
 
   var request = new http.ClientRequest({
-      host: API_HOST[0],
-      port: API_HOST[1],
+      host: api_host_var[0],
+      port: api_host_var[1],
       path: "/",
       method: "PUT",
       "agent":false,
