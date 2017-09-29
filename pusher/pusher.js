@@ -16,9 +16,7 @@ var UPDATE_INTERVAL = 6*60*1000;  // six minutes
 
 
 var key_data = fs.readFileSync('keys/expresslanesapi.key.pub', 'utf8');
-var key_data_dev = fs.readFileSync('keys/expresslanesapi.key.pub', 'utf8');
 var publickey = new NodeRSA(key_data);
-var publickey_dev = new NodeRSA(key_data_dev);
 
 function parseSqlCmd(response){
   var lines = response.split('\n');
@@ -101,7 +99,7 @@ function pulse(){
           sendData(clean_data, API_HOST, publickey);
 
           //Send to Dev
-          sendData(clean_data, API_HOST_DEV, publickey_dev);
+          sendData(clean_data, API_HOST_DEV, publickey);
 
           // get new data five minutes from the time given
           next_update_in_ms =  (this_update_in_ms + UPDATE_INTERVAL) - (new Date()).getTime();
