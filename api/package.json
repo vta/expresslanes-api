@@ -16,7 +16,8 @@
     "express": "^4.13.4",
     "mocha": "^2.4.5",
     "node-rsa": "^0.3.2",
-    "socket.io": "^1.4.6"
+    "socket.io": "^1.4.6",
+    "node-cmd": "3.0.0"
   },
   "directories": {
     "test": "test"
