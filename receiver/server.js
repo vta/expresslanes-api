@@ -10,6 +10,7 @@ const express = require('express')
   , path = require('path')
   , NodeRSA = require('node-rsa')
   , server = require('http').createServer(app)
+  , cmd = require('node-cmd')
   , io = require('socket.io')(server);
 
 // Constants
@@ -76,7 +77,17 @@ app.put('/', function (req, res, next) {
   }
 
   tolldata = received;
-  io.emit('toll', tolldata);
+  
+  fs.writeFile("../../live_toll.json", JSON.stringify(tolldata), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+    }); 
+
+  cmd.run('cd /home/ec2-user/mtlfs_flask_server && /home/ec2-user/miniconda3/envs/flask_server/bin/python3 toll_status_updater.py')
+
   res.status(200).end();
 });
 
