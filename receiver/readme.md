@@ -1,49 +1,17 @@
-# [API](https://github.com/vta/expresslanes-api/tree/master/api)
+# [Receiver](https://github.com/vta/expresslanes-api/tree/master/receiver)
 
 ## Usage
 
-The [example.html](http://rawgit.com/vta/expresslanes-api/master/client_examples/salesforce_example.html) file demonstrates the usage of this API, and uses the `Interval_Starting` property to calculate the time at which the next request should be made, since data is updated in 5 minute intervals.
 
-`GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/) are recommended for testing. Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
-
+<!-- `GET` and `PUT` operations are supported to get and set the data. Tools such as [cURL](https://curl.haxx.se/) or [Postman](https://www.getpostman.com/) are recommended for testing. Both requests and responses should be made with Content-Type as `application/json; charset=utf-8`.
+ -->
+ 
 ### Format
-The data sent and received to/from the API is sent as a JSON array of objects with each of the following fields being required in each object:
+The data sent to the API is a JSON array of objects with each of the following fields being required in each object:
 * Plaza_Name `(string)` is any string describing the location of the area. In the examples, CLW and FSW represent toll locations for "SR 237 West to Sunnyvale" and "I-880 North to Oakland", respectively. This field cannot be null.
 * Interval_Starting `(number|null)` a number representing time as the number of milliseconds since 1 January 1970 00:00:00 UTC. This value can be null, but it is highly recommended to be populated, as this value allows clients to determine when the next update should occur.
 * Pricing_Module `(string|null)` is the price.
 * Message_Module `(string|null`) is any arbitrary message to display.
-
-
-## GET /
-### request
-```
-curl -X GET -H "Cache-Control: no-cache" "http://localhost:8080"
-````
-
-### response
-The response should be HTTP 200 (OK), and something like the following in the body:
-```
-[
-  {
-    "biCalSeqID": "36039",
-    "Plaza_Name": "CLW",
-    "Interval_Starting": 1463610000000,
-    "Pricing_Module": "0.50",
-    "Message_Module": "HOV 2+ NO TOLL",
-    "User": "SYSTEM",
-    "Algorithm_Mode": "EL Speed"
-  },
-  {
-    "biCalSeqID": "36039",
-    "Plaza_Name": "FSE",
-    "Interval_Starting": 1463610000000,
-    "Pricing_Module": "2.50",
-    "Message_Module": "HOV 2+ NO TOLL",
-    "User": "SYSTEM",
-    "Algorithm_Mode": "EL Speed"
-  }
-]
-```
 
 ## PUT /
 Data that is submitted to the API is also in JSON format, and the data follows the same schema as that returned by the GET method, and is placed in a new property called `tolls`.  The value of the `tolls` property must be encrypted and base64 encoded with the public key for it to be accepted. To see how this is done, check out the `sendData` function in [pusher.js](../pusher/pusher.js).
@@ -125,7 +93,7 @@ $ npm install
 $ node server.js
 ```
 
-### Running as a docker container
+### Running as a docker container (This is no longer maintained)
 
 To build the docker image:
 
