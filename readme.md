@@ -13,7 +13,3 @@ The data sent to the Receiver by Pusher is encrypted to prevent against maliciou
 The Receiver is packaged as a docker image on [Dockerhub](https://hub.docker.com/r/scvta/vta-express-lanes-api/). Its job is to receive the data sent by the Pusher and activate the MTLFS server functions to serve it to the public.
 
 Detailed information on how to use the Receiver is available in [the readme](api/readme.md).
-
-#EXTRA
-## [The client](/client_examples)
-The client works as the data consumer, and can be anything that makes use of the data given by the API, which provides both regular JSON and WebSocket endpoints. Each of these are demonstrated in a web page in [AJAX example](client_examples/ajax_example.html) and [WebSockets example](client_examples/websockets_example.html).
